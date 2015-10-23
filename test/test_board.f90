@@ -20,6 +20,69 @@ module test_board
       call assert_equals(expected_board, actual_board, 3, 3, "Creates a new board")
     end subroutine test_new_board
 
+    subroutine test_move_is_valid
+      use fruit
+      use board
+
+      implicit none
+      integer, dimension (3,3) :: given_board
+      integer :: x, y
+
+      given_board = reshape( &
+        (/1, 2, 0,           &
+          0, 0, 2,           &
+          1, 1, 0/),         &
+        (/3, 3/)             &
+      )
+
+      x = 2
+      y = 2
+
+      call assert_true(move_is_valid(given_board, x, y))
+    end subroutine test_move_is_valid
+
+    subroutine test_move_is_valid_with_invalid_move
+      use fruit
+      use board
+
+      implicit none
+      integer, dimension (3,3) :: given_board
+      integer :: x, y
+
+      given_board = reshape( &
+        (/1, 2, 0,           &
+          0, 2, 2,           &
+          1, 1, 0/),         &
+        (/3, 3/)             &
+      )
+
+      x = 1
+      y = 1
+
+      call assert_false(move_is_valid(given_board, x, y))
+    end subroutine test_move_is_valid_with_invalid_move
+
+    subroutine test_move_is_valid_with_out_of_bounds_move
+      use fruit
+      use board
+
+      implicit none
+      integer, dimension (3,3) :: given_board
+      integer :: x, y
+
+      given_board = reshape( &
+        (/1, 2, 0,           &
+          0, 2, 2,           &
+          1, 1, 0/),         &
+        (/3, 3/)             &
+      )
+
+      x = 17
+      y = -3
+
+      call assert_false(move_is_valid(given_board, x, y))
+    end subroutine test_move_is_valid_with_out_of_bounds_move
+
     subroutine test_valid_moves
       use fruit
       use board

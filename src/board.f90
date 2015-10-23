@@ -11,6 +11,23 @@ module board
       new_board = EMPTY_VALUE
     end function new_board
 
+    function move_is_valid(given_board, x, y)
+      integer :: x, y
+      integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
+      logical :: in_bounds, move_is_valid
+
+      in_bounds = 1 <= x .and.                     &
+                  1 <= y .and.                     &
+                  x <= size(given_board, 1) .and.  &
+                  y <= size(given_board, 2)
+
+      if (in_bounds) then
+        move_is_valid = given_board(x, y) == EMPTY_VALUE
+      else
+        move_is_valid = in_bounds
+      end if
+    end function move_is_valid
+
     function valid_moves(given_board)
       use coordinate_lists, only: append_to_coordinate_list
 
@@ -23,7 +40,7 @@ module board
 
       do x=1, BOARD_SIZE
         do y=1, BOARD_SIZE
-          if (given_board(x, y) == EMPTY_VALUE) then
+          if (move_is_valid(given_board, x, y)) then
             call append_to_coordinate_list(valid_moves, x, y)
           endif
         end do

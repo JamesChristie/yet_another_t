@@ -6,6 +6,7 @@ program fruit_test_driver
   use test_detection
   use test_game_printer
   use test_perfect_player
+  use test_computer_interaction
 
   call init_fruit
 
@@ -19,6 +20,9 @@ program fruit_test_driver
 
   ! Board tests
   call test_new_board
+  call test_move_is_valid
+  call test_move_is_valid_with_invalid_move
+  call test_move_is_valid_with_out_of_bounds_move
   call test_valid_moves
   call test_apply_move_with_empty_game
   call test_apply_move_with_ongoing_game
@@ -44,6 +48,9 @@ program fruit_test_driver
   call test_one_move_for_win_available
   call test_different_move_for_win_available
   call test_unwinnable_game
- 
+
+  ! Computer player tests
+  call test_get_next_move
+
   call fruit_summary
 end program fruit_test_driver

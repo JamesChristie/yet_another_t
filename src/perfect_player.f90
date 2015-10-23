@@ -2,7 +2,7 @@
 ! to what is seen here:
 ! https://github.com/JamesChristie/minimax_kata/blob/kata/minimax_kata/minimax_solver.py
 module perfect_player
-  use board, only: board_size
+  use board, only: BOARD_SIZE
   use detection
 
   implicit none
