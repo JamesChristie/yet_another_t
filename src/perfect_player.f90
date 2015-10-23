@@ -13,7 +13,6 @@ module perfect_player
 
   type minimax_step
     integer :: proxied_player, current_player
-    integer :: depth = 0
     integer, dimension (BOARD_SIZE,BOARD_SIZE) :: current_board
 
     contains
@@ -149,20 +148,18 @@ module perfect_player
         next_step = minimax_step(             &
           current_board=given_board,          &
           proxied_player=this%proxied_player, &
-          current_player=this%get_opponent(), &
-          depth=this%depth + 1                &
+          current_player=this%get_opponent()  &
         )
 
-        calculate_score = -(next_step%get_max_score() - this%depth)
+        calculate_score = -next_step%get_max_score()
       else
         next_step = minimax_step(             &
           current_board=given_board,          &
           proxied_player=this%proxied_player, &
-          current_player=this%proxied_player, &
-          depth=this%depth + 1                &
+          current_player=this%proxied_player  &
         )
 
-        calculate_score = next_step%get_max_score() - this%depth
+        calculate_score = next_step%get_max_score()
       end if
     end function calculate_score
 end module perfect_player
