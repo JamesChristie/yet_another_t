@@ -27,6 +27,7 @@ module test_board
       implicit none
       integer, dimension (3,3) :: given_board
       integer :: x, y
+      logical :: actual_validity
 
       given_board = reshape( &
         (/1, 2, 0,           &
@@ -38,7 +39,9 @@ module test_board
       x = 2
       y = 2
 
-      call assert_true(move_is_valid(given_board, x, y))
+      actual_validity = move_is_valid(given_board, x, y)
+
+      call assert_true(actual_validity, "Free space is valid")
     end subroutine test_move_is_valid
 
     subroutine test_move_is_valid_with_invalid_move
@@ -48,6 +51,7 @@ module test_board
       implicit none
       integer, dimension (3,3) :: given_board
       integer :: x, y
+      logical :: actual_validity
 
       given_board = reshape( &
         (/1, 2, 0,           &
@@ -59,7 +63,9 @@ module test_board
       x = 1
       y = 1
 
-      call assert_false(move_is_valid(given_board, x, y))
+      actual_validity = move_is_valid(given_board, x, y)
+
+      call assert_false(actual_validity, "Owned space is invalid")
     end subroutine test_move_is_valid_with_invalid_move
 
     subroutine test_move_is_valid_with_out_of_bounds_move
@@ -69,6 +75,7 @@ module test_board
       implicit none
       integer, dimension (3,3) :: given_board
       integer :: x, y
+      logical :: actual_validity
 
       given_board = reshape( &
         (/1, 2, 0,           &
@@ -80,7 +87,9 @@ module test_board
       x = 17
       y = -3
 
-      call assert_false(move_is_valid(given_board, x, y))
+      actual_validity = move_is_valid(given_board, x, y)
+
+      call assert_false(actual_validity, "Out of bounds is invalid")
     end subroutine test_move_is_valid_with_out_of_bounds_move
 
     subroutine test_valid_moves

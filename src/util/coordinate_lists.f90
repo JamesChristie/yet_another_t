@@ -1,5 +1,8 @@
 module coordinate_lists
   contains
+    ! NOTE (JamesChristie) A small style note: even local vars
+    ! must be defined at the top of a procedure (function or
+    ! subroutine) like arguments and return values.
     subroutine append_to_coordinate_list(given_cordinates, x, y)
       implicit none
       integer :: i, x, y, move_size, new_size

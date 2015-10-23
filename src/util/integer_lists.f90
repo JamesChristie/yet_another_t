@@ -1,5 +1,8 @@
 module integer_lists
   contains
+    ! NOTE (JamesChristie) A small style note: even local vars
+    ! must be defined at the top of a procedure (function or
+    ! subroutine) like arguments and return values.
     subroutine append_to_integer_list(given_integers, new_integer)
       implicit none
       integer :: i, new_integer, move_size, new_size

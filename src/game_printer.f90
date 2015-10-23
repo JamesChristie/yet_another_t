@@ -48,20 +48,20 @@ module game_printer
       integer, dimension (3,3) :: given_board
       character (len=OUTPUT_LENGTH) :: game_string
 
-      game_string = TOP_LEGEND//&
-                    new_line('A')//&
-                    TOP_BORDER//&
-                    new_line('A')//&
-                    row_string(1, '1', given_board)//&
-                    new_line('A')//&
-                    HOR_DIVIDER//&
-                    new_line('A')//&
-                    row_string(2, '2', given_board)//&
-                    new_line('A')//&
-                    HOR_DIVIDER//&
-                    new_line('A')//&
-                    row_string(3, '3', given_board)//&
-                    new_line('A')//&
+      game_string = TOP_LEGEND//                      &
+                    new_line('A')//                   &
+                    TOP_BORDER//                      &
+                    new_line('A')//                   &
+                    row_string(1, '1', given_board)// &
+                    new_line('A')//                   &
+                    HOR_DIVIDER//                     &
+                    new_line('A')//                   &
+                    row_string(2, '2', given_board)// &
+                    new_line('A')//                   &
+                    HOR_DIVIDER//                     &
+                    new_line('A')//                   &
+                    row_string(3, '3', given_board)// &
+                    new_line('A')//                   &
                     BOT_BORDER
     end function game_string
 
@@ -79,9 +79,9 @@ module game_printer
       middle = owner_char(given_board(2, row_number))
       right  = owner_char(given_board(3, row_number))
 
-      row_string = row_title//EMPTY//BORDER//&
-                   left//VERTICAL//middle//VERTICAL//right//&
-                   BORDER
+      row_string = row_title//EMPTY//BORDER// &
+                   left//VERTICAL//middle//   &
+                   VERTICAL//right//BORDER
     end function row_string
 
     function owner_char(player)

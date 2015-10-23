@@ -21,7 +21,13 @@ module game
         move = computer%get_next_move(given_board)
       end if
 
-      given_board       = apply_move(given_board, current_player_id, move(1), move(2))
+      given_board = apply_move( &
+        given_board,            &
+        current_player_id,      &
+        move(1),                &
+        move(2)                 &
+      )
+
       current_player_id = get_opponent(current_player_id)
     end subroutine update_game
 end module game

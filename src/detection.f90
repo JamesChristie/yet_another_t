@@ -70,7 +70,7 @@ module detection
       integer, dimension (board_size,board_size) :: given_board
       logical :: game_is_over
 
-      game_is_over = game_is_tie(given_board) .or.     &
+      game_is_over = game_is_tie(given_board)     .or. &
                      game_won_for(given_board, 1) .or. &
                      game_won_for(given_board, 2)
     end function game_is_over
@@ -83,14 +83,14 @@ module detection
       integer, dimension (board_size,board_size) :: given_board
       logical :: game_won_for
 
-      game_won_for = sequence_is_win(given_board, TOP_ROW,        player) &
-                .or. sequence_is_win(given_board, MIDDLE_ROW,     player) &
-                .or. sequence_is_win(given_board, BOTTOM_ROW,     player) &
-                .or. sequence_is_win(given_board, LEFT_COLUMN,    player) &
-                .or. sequence_is_win(given_board, MIDDLE_COLUMN,  player) &
-                .or. sequence_is_win(given_board, RIGHT_COLUMN,   player) &
-                .or. sequence_is_win(given_board, LEFT_DIAGONAL,  player) &
-                .or. sequence_is_win(given_board, RIGHT_DIAGONAL, player)
+      game_won_for = sequence_is_win(given_board, TOP_ROW,        player) .or. &
+                     sequence_is_win(given_board, MIDDLE_ROW,     player) .or. &
+                     sequence_is_win(given_board, BOTTOM_ROW,     player) .or. &
+                     sequence_is_win(given_board, LEFT_COLUMN,    player) .or. &
+                     sequence_is_win(given_board, MIDDLE_COLUMN,  player) .or. &
+                     sequence_is_win(given_board, RIGHT_COLUMN,   player) .or. &
+                     sequence_is_win(given_board, LEFT_DIAGONAL,  player) .or. &
+                     sequence_is_win(given_board, RIGHT_DIAGONAL, player)
     end function game_won_for
 
     function game_lost_for(given_board, player)

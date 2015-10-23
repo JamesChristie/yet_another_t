@@ -6,8 +6,7 @@ module test_game_printer
 
       implicit none
       integer, dimension (3,3) :: given_board
-      character (len=OUTPUT_LENGTH) :: expected_string
-      character (len=OUTPUT_LENGTH) :: actual_string
+      character (len=OUTPUT_LENGTH) :: expected_string, actual_string
 
       given_board = reshape( &
         (/1, 2, 0,           &

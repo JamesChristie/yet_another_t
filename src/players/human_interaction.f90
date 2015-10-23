@@ -13,12 +13,23 @@ module human_interaction
 
       implicit none
       integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
+      logical :: valid_move
       integer, dimension(2) :: get_human_move
 
       do while (.true.)
         get_human_move = read_move()
-        if (move_is_valid(given_board, get_human_move(1), get_human_move(2))) exit
-        write(*,'(A)') new_line('A')//"Invalid move entered"
+
+        valid_move = move_is_valid( &
+          given_board,              &
+          get_human_move(1),        &
+          get_human_move(2)         &
+        )
+
+        if (valid_move) then
+          exit
+        else
+          print *, new_line('A')//"Invalid move entered"//new_line('A')
+        end if
       enddo
     end function get_human_move
 end module human_interaction

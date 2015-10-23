@@ -123,39 +123,6 @@ module test_perfect_player
       call assert_equals(expected_moves, actual_moves, 1, 2, "Finds the tying move")
     end subroutine
 
-    ! *********************************************
-    !  Column:            1
-    !  Row:               2
-    !  Score:            -10
-    ! 
-    !  Column:            1
-    !  Row:               3
-    !  Score:            -10
-    ! 
-    !  Column:            2
-    !  Row:               1
-    !  Score:            -10 (should be at least 0)
-    ! 
-    !  Column:            3
-    !  Row:               1
-    !  Score:            -10
-    ! 
-    !  Column:            3
-    !  Row:               2
-    !  Score:            -10
-    ! 
-    !  Column:            3
-    !  Row:               3
-    !  Score:            -10
-    ! 
-    !    1 2 3 
-    !   #######
-    ! 1 #O| | #
-    !   #-+-+-#
-    ! 2 # |X| #
-    !   #-+-+-#
-    ! 3 # |X| #
-    !   #######
     subroutine test_defense_against_win
       use fruit
       use perfect_player

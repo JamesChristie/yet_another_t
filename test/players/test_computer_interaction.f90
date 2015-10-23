@@ -19,10 +19,10 @@ module test_computer_interaction
         (/3, 3/)             &
       )
 
-    expected_move = (/1, 3/)
+      expected_move = (/1, 3/)
 
-    actual_move = player%get_next_move(given_board)
+      actual_move = player%get_next_move(given_board)
 
-    call assert_equals(expected_move, actual_move, 2, "Makes a move")
+      call assert_equals(expected_move, actual_move, 2, "Makes a move")
     end subroutine test_get_next_move
 end module test_computer_interaction

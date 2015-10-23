@@ -17,7 +17,7 @@ module test_detection
 
       win_status = game_is_over(given_board)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Won game is over")
     end subroutine test_game_is_over
 
     subroutine test_tied_game_is_not_loss
@@ -84,7 +84,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 1)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports top row win")
     end subroutine test_top_row_win
 
     subroutine test_middle_row_win
@@ -104,7 +104,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 1)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports middle row win")
     end subroutine test_middle_row_win
 
     subroutine test_bottom_row_win
@@ -124,7 +124,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 1)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports bottom row win")
     end subroutine test_bottom_row_win
 
     subroutine test_left_column_win
@@ -144,7 +144,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 1)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports left column win")
     end subroutine test_left_column_win
 
     subroutine test_middle_column_win
@@ -164,7 +164,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 1)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports middle column win")
     end subroutine test_middle_column_win
 
     subroutine test_right_column_win
@@ -184,7 +184,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 2)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports right column win")
     end subroutine test_right_column_win
 
     subroutine test_left_diagonal_win
@@ -204,7 +204,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 2)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports left diagonal win")
     end subroutine test_left_diagonal_win
 
     subroutine test_right_diagonal_win
@@ -224,7 +224,7 @@ module test_detection
 
       win_status = game_won_for(given_board, 2)
 
-      call assert_true(win_status)
+      call assert_true(win_status, "Reports right diagonal win")
     end subroutine test_right_diagonal_win
 
     subroutine test_tied_game
@@ -244,7 +244,7 @@ module test_detection
 
       tie_status = game_is_tie(given_board)
 
-      call assert_true(tie_status)
+      call assert_true(tie_status, "Reports tie")
     end subroutine test_tied_game
 
     subroutine test_game_in_progress

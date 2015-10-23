@@ -10,6 +10,14 @@ module perfect_player
   integer, parameter :: WIN_SCORE  = 10
   integer, parameter :: TIE_SCORE  = 0
 
+  ! NOTE (JamesChristie) This is the prototypical definition
+  ! of the minimax_step class. Fortran uses derive types as
+  ! the basis for its OO functionality. Instance methods are
+  ! marked off further down in this file; they are bound
+  ! dynamically at runtime similar to Python. The first
+  ! arguent is always an implicit value for `this`, which
+  ! uses the class keyword instead of type to differentiate
+  ! for the derived type should be used in that context.
   type minimax_step
     integer :: proxied_player, current_player
     integer, dimension (BOARD_SIZE,BOARD_SIZE) :: current_board
@@ -17,6 +25,7 @@ module perfect_player
     contains
       procedure :: get_best_moves
       procedure :: get_max_score
+
       procedure, private :: get_score_list
       procedure, private :: get_score_for_move
       procedure, private :: calculate_score
@@ -58,8 +67,8 @@ module perfect_player
 
       allocate(get_best_moves(0, 2))
       available_moves = valid_moves(this%current_board)
-      score_list = this%get_score_list()
-      max_score = this%get_max_score()
+      score_list      = this%get_score_list()
+      max_score       = this%get_max_score()
 
       do i=1, size(available_moves, 1)
         if (score_list(i) == max_score) then
@@ -133,16 +142,16 @@ module perfect_player
       integer :: calculate_score
 
       if (this%current_player == this%proxied_player) then
-        next_step = minimax_step(                          &
-          current_board=given_board,                       &
-          proxied_player=this%proxied_player,              &
-          current_player=get_opponent(this%proxied_player) &
+        next_step = minimax_step(                            &
+          current_board  = given_board,                      &
+          proxied_player = this%proxied_player,              &
+          current_player = get_opponent(this%proxied_player) &
         )
       else
-        next_step = minimax_step(             &
-          current_board=given_board,          &
-          proxied_player=this%proxied_player, &
-          current_player=this%proxied_player  &
+        next_step = minimax_step(               &
+          current_board  = given_board,         &
+          proxied_player = this%proxied_player, &
+          current_player = this%proxied_player  &
         )
       end if
 

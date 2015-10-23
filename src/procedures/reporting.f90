@@ -27,11 +27,15 @@ module reporting
       implicit none
       integer :: human_id, computer_id
       integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
+      logical :: human_win, computer_win
       character (len=30) :: ending_message
 
-      if (game_won_for(given_board, human_id)) then
+      human_win    = game_won_for(given_board, human_id)
+      computer_win = game_won_for(given_board, computer_id)
+
+      if (human_win) then
         ending_message = " ** Player has won **"
-      else if (game_won_for(given_board, computer_id)) then
+      else if (computer_win) then
         ending_message = " ** Computer has won **"
       else
         ending_message = " ** Nobody has won **"

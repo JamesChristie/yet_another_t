@@ -17,8 +17,8 @@ module renderer
         move_message = "Computer move"
       end if
 
-      print *, new_line('A')//move_message
-      write(*,'(A)',advance='no') new_line('A')
+      print *, new_line('A')//move_message//new_line('A')
+
       call print_game(given_board)
     end subroutine render
 end module renderer

@@ -1,7 +1,7 @@
 module board
   implicit none
-  integer, parameter :: BOARD_SIZE = 3
-  integer, private :: EMPTY_VALUE = 0
+  integer, parameter :: BOARD_SIZE  = 3
+  integer, private   :: EMPTY_VALUE = 0
 
   contains
     function new_board()
@@ -16,10 +16,10 @@ module board
       integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
       logical :: in_bounds, move_is_valid
 
-      in_bounds = 1 <= x .and.                     &
-                  1 <= y .and.                     &
-                  x <= size(given_board, 1) .and.  &
-                  y <= size(given_board, 2)
+      in_bounds = x <= size(given_board, 1) .and.  &
+                  y <= size(given_board, 2) .and.  &
+                  1 <= x                    .and.  &
+                  1 <= y
 
       if (in_bounds) then
         move_is_valid = given_board(x, y) == EMPTY_VALUE
@@ -40,9 +40,11 @@ module board
 
       do x=1, BOARD_SIZE
         do y=1, BOARD_SIZE
+
           if (move_is_valid(given_board, x, y)) then
             call append_to_coordinate_list(valid_moves, x, y)
           endif
+
         end do
       end do
     end function valid_moves
@@ -55,7 +57,7 @@ module board
       integer, dimension (BOARD_SIZE,BOARD_SIZE) :: apply_move
 
       if (given_board(x, y) == EMPTY_VALUE) then
-        new_board = given_board
+        new_board       = given_board
         new_board(x, y) = player
 
         apply_move = new_board
