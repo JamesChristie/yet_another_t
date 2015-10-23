@@ -52,6 +52,17 @@ module detection
   private sequence_is_win
 
   contains
+    function get_opponent(player)
+      integer :: player
+      integer :: get_opponent
+
+      if (player /= 1) then
+        get_opponent = 1
+      else
+        get_opponent = 2
+      end if
+    end function get_opponent
+
     function game_is_over(given_board)
       use board, only: BOARD_SIZE
 
@@ -86,15 +97,15 @@ module detection
       use board
 
       implicit none
-      integer :: player
+      integer :: player, opponent
       integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
       integer, dimension (:,:), allocatable :: available_moves
       logical :: game_lost_for
 
+      opponent        = get_opponent(player)
       available_moves = valid_moves(given_board)
 
-      game_lost_for = .not. game_won_for(given_board, player) .and. &
-                      .not. size(available_moves, 1) > 0
+      game_lost_for = game_won_for(given_board, opponent)
     end function game_lost_for
 
     function game_is_tie(given_board)

@@ -20,6 +20,53 @@ module test_detection
       call assert_true(win_status)
     end subroutine test_game_is_over
 
+    subroutine test_tied_game_is_not_loss
+      use fruit
+      use detection
+
+      implicit none
+      integer, dimension (3,3) :: given_board
+      logical :: loss_status, tie_status
+
+      given_board = reshape( &
+        (/2, 1, 2,           &
+          1, 1, 2,           &
+          2, 2, 1/),         &
+        (/3, 3/)             &
+      )
+
+      loss_status = game_lost_for(given_board, 1) .or. &
+                    game_lost_for(given_board, 2)
+
+      tie_status  = game_is_tie(given_board)
+
+      call assert_false(loss_status, "It is not a loss")
+      call assert_true(tie_status, "It is a tie")
+    end subroutine test_tied_game_is_not_loss
+
+    subroutine test_lost_game_is_loss
+      use fruit
+      use detection
+
+      implicit none
+      integer, dimension (3,3) :: given_board
+      logical :: loss_status, tie_status
+
+      given_board = reshape( &
+        (/1, 0, 2,           &
+          2, 1, 0,           &
+          0, 0, 1/),         &
+        (/3, 3/)             &
+      )
+
+      loss_status = game_lost_for(given_board, 2)
+
+      tie_status  = game_is_tie(given_board)
+
+      call assert_true(loss_status, "It is a loss")
+      call assert_false(tie_status, "It is not a tie")
+    end subroutine test_lost_game_is_loss
+
     subroutine test_top_row_win
       use fruit
       use detection

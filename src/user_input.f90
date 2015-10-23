@@ -9,7 +9,7 @@ module user_input
 
       write(*,'(A)',advance='no') new_line('A')//"Please enter a column number: "
       read(*,'(i10)') column
-      write(*,'(A)',advance='no') new_line('A')//"Please enter a row number: "
+      write(*,'(A)',advance='no') "Please enter a row number: "
       read(*,'(i10)') row
 
       read_move = (/column, row/)

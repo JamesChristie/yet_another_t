@@ -1,5 +1,5 @@
 ! NOTE (JamesChristie) For comparison, this is a roghly identical implementation
-! to what is seen here:
+! to what is seen here (only needing waaaaay more boiler plate):
 ! https://github.com/JamesChristie/minimax_kata/blob/kata/minimax_kata/minimax_solver.py
 module perfect_player
   use board, only: BOARD_SIZE
@@ -7,16 +7,14 @@ module perfect_player
 
   implicit none
 
-  integer, parameter :: WIN_SCORE = 10
-  integer, parameter :: LOSS_SCORE = -10
-  integer, parameter :: TIE_SCORE = 0
+  integer, parameter :: WIN_SCORE  = 10
+  integer, parameter :: TIE_SCORE  = 0
 
   type minimax_step
     integer :: proxied_player, current_player
     integer, dimension (BOARD_SIZE,BOARD_SIZE) :: current_board
 
     contains
-      procedure :: get_opponent
       procedure :: get_best_moves
       procedure :: get_max_score
       procedure, private :: get_score_list
@@ -47,17 +45,6 @@ module perfect_player
 
     ! Instance methods of minimax_step
     ! --------------------------------
-    function get_opponent(this)
-      class(minimax_step) :: this
-      integer :: get_opponent
-
-      if (this%proxied_player /= 1) then
-        get_opponent = 1
-      else
-        get_opponent = 2
-      end if
-    end function get_opponent
-
     function get_best_moves(this)
       use board
       use coordinate_lists
@@ -83,6 +70,7 @@ module perfect_player
           )
         end if
       enddo
+
     end function get_best_moves
 
     function get_max_score(this)
@@ -108,11 +96,11 @@ module perfect_player
       available_moves = valid_moves(this%current_board)
 
       do i=1, size(available_moves, 1)
-        temp_board = apply_move( &
-          this%current_board,    &
-          this%current_player,   &
-          available_moves(i,1),  &
-          available_moves(i,2)   &
+        temp_board = apply_move(  &
+          this%current_board,     &
+          this%current_player,    &
+          available_moves(i, 1),  &
+          available_moves(i, 2)   &
         )
 
         temp_score = this%get_score_for_move(temp_board)
@@ -126,10 +114,8 @@ module perfect_player
       integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
       integer :: get_score_for_move
 
-      if (game_won_for(given_board, this%proxied_player)) then
+      if (game_won_for(given_board, this%current_player)) then
         get_score_for_move = WIN_SCORE
-      else if (game_lost_for(given_board, this%proxied_player)) then
-        get_score_for_move = LOSS_SCORE
       else if (game_is_tie(given_board)) then
         get_score_for_move = TIE_SCORE
       else
@@ -138,6 +124,8 @@ module perfect_player
     end function get_score_for_move
 
     function calculate_score(this, given_board)
+      use detection, only: get_opponent
+
       implicit none
       class(minimax_step) :: this
       type(minimax_step) :: next_step
@@ -145,21 +133,19 @@ module perfect_player
       integer :: calculate_score
 
       if (this%current_player == this%proxied_player) then
-        next_step = minimax_step(             &
-          current_board=given_board,          &
-          proxied_player=this%proxied_player, &
-          current_player=this%get_opponent()  &
+        next_step = minimax_step(                          &
+          current_board=given_board,                       &
+          proxied_player=this%proxied_player,              &
+          current_player=get_opponent(this%proxied_player) &
         )
-
-        calculate_score = -next_step%get_max_score()
       else
         next_step = minimax_step(             &
           current_board=given_board,          &
           proxied_player=this%proxied_player, &
           current_player=this%proxied_player  &
         )
-
-        calculate_score = next_step%get_max_score()
       end if
+
+      calculate_score = -next_step%get_max_score()
     end function calculate_score
 end module perfect_player

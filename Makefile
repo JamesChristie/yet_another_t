@@ -3,11 +3,16 @@ NAME=yet_another_t
 SOURCEDIR=src
 UTILDIR=$(SOURCEDIR)/util
 PLAYERDIR=$(SOURCEDIR)/players
+PROCEDUREDIR=$(SOURCEDIR)/procedures
+
 TESTDIR=test
 TESTUTILDIR=$(TESTDIR)/util
 TESTPLAYERDIR=$(TESTDIR)/players
+TESTPROCEDUREDIR=$(TESTDIR)/procedures
+
 BUILDDIR=build
 INCLUDEDIR=include
+
 EXECUTABLE=yat
 TESTEXECUTABLE=test_runner
 
@@ -20,16 +25,22 @@ CFLAGS=$(BASECFLAGS) $(INCLUDEFLAGS)
 SOURCES := $(wildcard $(SOURCEDIR)/*.f90)
 UTILITIES := $(wildcard $(UTILDIR)/*.f90)
 PLAYERS := $(wildcard $(PLAYERDIR)/*.f90)
+PROCEDURES := $(wildcard $(PROCEDUREDIR)/*.f90)
+
 TESTS := $(wildcard $(TESTDIR)/*.f90)
 TESTUTILITIES := $(wildcard $(TESTUTILDIR)/*.f90)
 TESTPLAYERS := $(wildcard $(TESTPLAYERDIR)/*.f90)
+TESTPROCEDURES := $(wildcard $(TESTPROCEDUREDIR)/*.f90)
 
 UTILOBJECTS := $(patsubst $(UTILDIR)/%.f90, $(BUILDDIR)/%.o, $(UTILITIES))
 PLAYEROBJECTS := $(patsubst $(PLAYERDIR)/%.f90, $(BUILDDIR)/%.o, $(PLAYERS))
 SOURCEOBJECTS := $(patsubst $(SOURCEDIR)/%.f90, $(BUILDDIR)/%.o, $(SOURCES))
+PROCEDUREOBJECTS := $(patsubst $(PROCEDUREDIR)/%.f90, $(BUILDDIR)/%.o, $(PROCEDURES))
+
 TESTOBJS := $(patsubst $(TESTDIR)/%.f90, $(BUILDDIR)/%.o, $(TESTS))
 TESTUTILOBJS := $(patsubst $(TESTUTILDIR)/%.f90, $(BUILDDIR)/%.o, $(TESTUTILITIES))
 TESTPLAYEROBJS := $(patsubst $(TESTPLAYERDIR)/%.f90, $(BUILDDIR)/%.o, $(TESTPLAYERS))
+TESTPROCEDUREOBJS := $(patsubst $(TESTPROCEDUREDIR)/%.f90, $(BUILDDIR)/%.o, $(TESTPROCEDURES))
 
 all: build_dir final
 
@@ -41,7 +52,7 @@ test: build_dir clean build_modules test_prep build_test
 test_prep:
 	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $(BUILDDIR)/fruit.o $(INCLUDEDIR)/fruit.f90
 
-build_test: $(TESTOBJS) $(TESTUTILOBJS) $(TESTPLAYEROBJS)
+build_test: $(TESTOBJS) $(TESTUTILOBJS) $(TESTPLAYEROBJS) $(TESTPROCEDUREOBJS)
 	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $(BUILDDIR)/test_runner.o test_runner.f90
 	$(FORTRANC) $(CFLAGS) -o $(BUILDDIR)/$(TESTEXECUTABLE) \
 	  $(BUILDDIR)/test_runner.o $(wildcard $(BUILDDIR)/*.o)
@@ -56,7 +67,7 @@ final: build_dir clean build_modules
 	rm $(BUILDDIR)/*.o
 	rm $(BUILDDIR)/*.mod
 
-build_modules: $(UTILOBJECTS) $(SOURCEOBJECTS) $(PLAYEROBJECTS)
+build_modules: $(UTILOBJECTS) $(SOURCEOBJECTS) $(PLAYEROBJECTS) $(PROCEDUREOBJECTS)
 
 $(BUILDDIR)/%.o: $(SOURCEDIR)/%.f90
 	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $@ $^
@@ -67,6 +78,9 @@ $(BUILDDIR)/%.o: $(PLAYERDIR)/%.f90
 $(BUILDDIR)/%.o: $(UTILDIR)/%.f90
 	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $@ $^
 
+$(BUILDDIR)/%.o: $(PROCEDUREDIR)/%.f90
+	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $@ $^
+
 $(BUILDDIR)/%.o: $(TESTDIR)/%.f90
 	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $@ $^
 
@@ -74,6 +88,9 @@ $(BUILDDIR)/%.o: $(TESTUTILDIR)/%.f90
 	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $@ $^
 
 $(BUILDDIR)/%.o: $(TESTPLAYERDIR)/%.f90
+	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $@ $^
+
+$(BUILDDIR)/%.o: $(TESTPROCEDUREDIR)/%.f90
 	$(FORTRANC) $(CFLAGS) -c -J $(BUILDDIR) -o $@ $^
 
 clean:
