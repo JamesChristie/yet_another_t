@@ -1,10 +1,21 @@
 program fruit_test_driver
   use fruit
+  use test_integer_lists
+  use test_coordinate_lists
   use test_board
   use test_detection
   use test_game_printer
+  use test_perfect_player
 
   call init_fruit
+
+  ! Integer lists util
+  call test_appending_to_empty_list
+  call test_appending_to_populated_list
+
+  ! Coordinate lists util
+  call test_append_to_emtpy_coord_list
+  call test_append_to_populated_coord_list
 
   ! Board tests
   call test_new_board
@@ -22,9 +33,17 @@ program fruit_test_driver
   call test_right_column_win
   call test_left_diagonal_win
   call test_right_diagonal_win
+  call test_tied_game
+  call test_game_in_progress
 
   ! Game printer tests
   call test_game_string
+
+  ! Perfect player tests
+  call test_empty_game
+  call test_one_move_for_win_available
+  call test_different_move_for_win_available
+  call test_unwinnable_game
  
   call fruit_summary
 end program fruit_test_driver

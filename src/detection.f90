@@ -71,15 +71,34 @@ module detection
     end function game_won_for
 
     function game_lost_for(given_board, player)
-      use board, only: BOARD_SIZE
+      use board
 
       implicit none
       integer :: player
       integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
+      integer, dimension (:,:), allocatable :: available_moves
       logical :: game_lost_for
 
-      game_lost_for = .not. game_won_for(given_board, player)
+      available_moves = valid_moves(given_board)
+
+      game_lost_for = .not. game_won_for(given_board, player) .and. &
+                      .not. size(available_moves, 1) > 0
     end function game_lost_for
+
+    function game_is_tie(given_board)
+      use board
+
+      implicit none
+      integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
+      integer, dimension (:,:), allocatable :: available_moves
+      logical :: game_is_tie
+
+      available_moves = valid_moves(given_board)
+
+      game_is_tie = .not. game_won_for(given_board, 1) .and. &
+                    .not. game_won_for(given_board, 2) .and. &
+                    .not. size(available_moves, 1) > 0
+    end function game_is_tie
 
     function sequence_is_win(given_board, given_sequence, player)
       use board, only: BOARD_SIZE
