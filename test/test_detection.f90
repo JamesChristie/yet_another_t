@@ -1,5 +1,25 @@
 module test_detection
   contains
+    subroutine test_game_is_over
+      use fruit
+      use detection
+
+      implicit none
+      integer, dimension (3,3) :: given_board
+      logical :: win_status
+
+      given_board = reshape( &
+        (/1, 1, 1,           &
+          0, 0, 0,           &
+          0, 0, 0/),         &
+        (/3, 3/)             &
+      )
+
+      win_status = game_is_over(given_board)
+
+      call assert_true(win_status)
+    end subroutine test_game_is_over
+
     subroutine test_top_row_win
       use fruit
       use detection

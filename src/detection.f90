@@ -52,12 +52,24 @@ module detection
   private sequence_is_win
 
   contains
+    function game_is_over(given_board)
+      use board, only: BOARD_SIZE
+
+      implicit none
+      integer, dimension (board_size,board_size) :: given_board
+      logical :: game_is_over
+
+      game_is_over = game_is_tie(given_board) .or.     &
+                     game_won_for(given_board, 1) .or. &
+                     game_won_for(given_board, 2)
+    end function game_is_over
+
     function game_won_for(given_board, player)
       use board, only: BOARD_SIZE
 
       implicit none
       integer :: player
-      integer, dimension (BOARD_SIZE,BOARD_SIZE) :: given_board
+      integer, dimension (board_size,board_size) :: given_board
       logical :: game_won_for
 
       game_won_for = sequence_is_win(given_board, TOP_ROW,        player) &
