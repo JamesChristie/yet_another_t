@@ -1,3 +1,8 @@
+! NOTE (JamesChristie) The Fruit test suite lacks test discovery
+! so all specs must be invoked explicitly. It does have the
+! ability to compartmentalize tests into sub-suites or "baskets,"
+! but the library has a severe lack of documentation and it seemed
+! very not worth the time.
 program fruit_test_driver
   use fruit
   use test_integer_lists
