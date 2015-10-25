@@ -17,7 +17,7 @@ program yet_another_t
   computer      = computer_player(player_id=2, player_name="Computer")
   current_board = new_board()
 
-  call render(current_board, .false.)
+  call render(current_board, .true.)
 
   do while (.true.)
     call update_game(current_board, human, computer, current_player_id)

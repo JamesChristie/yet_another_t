@@ -10,7 +10,17 @@ The repository can be cloned locally by running:
 git clone https://github.com/JamesChristie/yet_another_t.git
 ```
 
-The only development dependency of this application is the GNU Fortran compiler front-end for GCC: `gfortran` of version 4.9 or higher. (It might work with 4.8, but I have not tested with it.)
+The only development dependency of this application is the GNU Fortran compiler front-end for GCC: `gfortran` of version 4.9 or higher. (It might work with 4.8, but I have not tested with it.) GFortran can be install on ubuntu with:
+
+```bash
+sudo apt-get install gfortran
+```
+
+It can be installed on OSX via:
+
+```bash
+brew install gcc
+```
 
 All tasks in the `Makefile` assume the `clean` task as a dependency, so it should not be possible to accidentally pollute your local builds. All tasks will remove the contents of the `build/` directory and start a new build from scratch.
 
